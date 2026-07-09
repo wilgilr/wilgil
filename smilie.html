@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>HTML SMart Inquire LInk Exists (SmILiE) Anchor Link Demonstration</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .card {
+            border: 1px solid #eee;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .success {
+            border-left: 5px solid #27ae60;
+        }
+
+        .failure {
+            border-left: 5px solid #c0392b; <!-- grey??? -->
+        }
+
+        .smilie {
+            border-left: 5px solid #062a78;
+        }
+
+        a {
+            color: #d4af37;
+            text-decoration: none;
+            border-bottom: 1px solid #d4af37;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            background: #d4af37;
+            color: white;
+        }
+    </style>
+</head>
+
+<!--
+<script>
+    // Replace with your allowed domain name
+    const allowedDomain = "wilgil.me";
+
+    // Check if the current website domain matches your domain
+    if (window.location.hostname !== allowedDomain) {
+        // Forcefully redirect them away
+        window.location.replace("https://www.wilgil.me");
+    }
+
+</script>
+-->
+
+<body>
+
+<script type="text/javascript">
+
+    const CORS_URL = "https://proxy.cors.sh/";
+    //const CORS_URL  = "https://api.allorigins.win/get?url="; //twitchy
+    const DEBUG = false;
+
+    async function xref(id) {
+
+        let timeout = 5000;    //const timeout = 5000; //5-seconds
+        //alert("timeout: "+timeout);
+
+        let link = document.getElementById(id);
+
+        //alert("xref: "+linkId);
+
+        //alert("link.head: "+link.dataset.url_head);
+        let url_head = link.dataset.url_head;
+        //alert("link.head: "+url_head);
+        //alert("link.tail: "+link.dataset.url_tail);
+        let url_tail = link.dataset.url_tail;
+        //alert("link.tail: "+url_tail);
+
+        timeout = Number(link.dataset.wait);
+
+        //alert("timeout: "+timeout);
+
+        //if(true){ return true; }
+
+        //let url = "https://proxy.cors.sh/" + inUrl;
+
+        //let url = "https://proxy.cors.sh/" + link.dataset.url_head;
+
+        let url = CORS_URL + link.dataset.url_head;
+
+        if (DEBUG) alert("url: " + url);
+
+
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+            const response = await fetch(url, {
+                method: 'HEAD',
+                mode: 'cors',       // Will fail if server does not allow CORS
+                signal: controller.signal
+            });
+
+            clearTimeout(timeoutId);
+            if (DEBUG) alert("try() urlExists: " + response.ok);
+
+            //link.style.color = "green";
+            //document.getElementById(linkId).style.color = "black";
+            if (response.ok) {
+                //document.getElementById(linkId).style.color = "green";
+                link.style.color = "green";
+                window.open(url_head, "_blank");
+                //window.location.href = url_head;
+
+            } else {
+                //document.getElementById(linkId).style.color = "red";
+                link.style.color = "grey";
+                if (url_tail === undefined || url_tail.length === 0) {
+                    alert("Link was not found.");
+                    return;
+                }
+                window.open(url_tail, "_blank");
+                //window.location.href = url_tail;
+
+            }//end if
+
+            return response.ok;   // true for 2xx
+        } catch (e) {
+            if (DEBUG) alert("catch() urlExists: " + e);
+            link.style.color = "grey";
+            //document.getElementById(linkId).style.color = "red";
+            if (url_tail === undefined || url_tail.length === 0) {
+                alert("Link was not found.");
+                return;
+            }
+
+            window.open(url_tail, "_blank");
+            //window.location.href = url_tail;
+
+            //if(!response.ok) {document.getElementById(linkId).style.color = "red"; }
+            //open new window urlTail
+            return false;
+        }
+    }//end xref
+
+    async function urlExists(inUrl, timeout = 5000) {
+
+        let url = "https://proxy.cors.sh/" + inUrl;
+        //let url = "https://api.allorigins.win/get?url=" + inUrl; //twitch
+
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+            const response = await fetch(url, {
+                method: 'HEAD',
+                mode: 'cors',       // Will fail if server does not allow CORS
+                signal: controller.signal
+            });
+
+            clearTimeout(timeoutId);
+            alert("urlExists: " + response.ok);
+            return response.ok;   // true for 2xx
+        } catch (e) {
+            alert("urlExists: " + e);
+
+            return false;
+        }
+    }//end urlExists
+
+    function isValidHttpUrl(string) {
+        try {
+            const url = new URL(string);
+            return url.protocol === "http:" || url.protocol === "https:";
+        } catch (err) {
+            return false;
+        }
+    }//end isValidHttpUrl
+
+    function checkUrl (string) {
+        let givenURL ;
+        try {
+            givenURL = new URL (string);
+        } catch (error) {
+            console.log ("error is", error);
+            return false;
+        }
+        return true;
+    }//end checkURL
+
+</script>
+
+<!-- add introduction, and then menu to intro, HTML anchor tag, HTML SmILiE tag -->
+
+<h1>
+    HTML Anchor Link and SmILiE Link Demonstration</h1>
+<p>
+    The <code>&lt;a&gt;</code> anchor tag is the heartbeat of the web it puts the "hyper" in hypertext. Here is how to
+    use it &mdash; and how to break it. The "flaw" in a raw HTML anchor link is that the link visited must exist to access.
+</p>
+
+<section id="intro">
+    <h2>
+        The HTML Raw Anchor Tag &lt;a&gt;
+    </h2>
+    <p>
+        The <code>&lt;a&gt;</code> tag is the heartbeat of the web. It defines a hyperlink, allowing users to navigate
+        between pages or jump to specific sections of a document.
+    </p>
+</section>
+<section id="syntax">
+    <h3>
+        The Syntax
+    </h3>
+    <pre><code>&lt;a href="https://wigil.me"&gt;Click Link to Visit William Fletcher Gilreath Home Site&lt;/a&gt;</code>
+	</pre>
+</section>
+<section id="attributes">
+    <h3>
+        Key Attributes of HTML Anchor tag
+    </h3>
+    <ul>
+        <li><strong>href:</strong> Specifies the destination URL.</li>
+        <li><strong>target:</strong> Specifies where to open the link (e.g., <code>_blank</code>).</li>
+        <li><strong>rel:</strong> Defines the relationship between the current and linked document.</li>
+    </ul>
+</section>
+
+
+<!-- SUCCESS CASE -->
+<section class="card success">
+    <h3>
+        &#x2705; <!-- Displays as: ✅ -->
+        The Successful Basic HTML Anchor Tag
+    </h3>
+    <p>
+        A successful anchor provides clear context and uses an absolute path. The user knows exactly where they are
+        going.
+    </p>
+    <code>&lt;a href="https://wikipedia.org"&gt;Visit Wikipedia&lt;/a&gt;</code> <br>
+    <br>
+    <a href="https://wikipedia.org" target="_blank">Success to goto Wikipedia; a live link.</a>
+</section>
+
+<!-- FAILURE CASE -->
+<section class="card failure">
+    <h3>
+        &#10060; <!-- Displays as: ❌ -->
+        The Failed HTML Anchor Tag
+    </h3>
+    <!-- Failure Dead Link, but illustrates can go to Internet Archive for archive link instead -->
+
+    <p>
+        This anchor is a "broken promise." It links to a dead, invalid destination, leading to a 404 or dead-end.
+    </p>
+    <code>&lt;a href="https://boisejug.org"&gt;I am a dead link.&lt;/a&gt;</code> <br>
+    <br>
+    <a href="https://boisejug.org" target="_blank">Failure to goto boisejug.org a dead link.</a>
+    <br><br><br>
+    <a href="https://web.archive.org/web/20020926204018/http://www.boisejug.org/" target="_blank">The website existed in
+        2002 from Internet Archive.</a>
+
+    <!--
+        Failure Empty Link         //illustrates alternate link, empty -> alert, or alternate web site
+        Failure Malformed Link     //illustrates alternate link, empty -> alert, or alternate web site
+
+    -->
+
+</section>
+
+<!-- SMILIE (SMart Implementation LInk Exists) like raw HTML anchor <a> but different attributes -->
+
+<br><br><br>
+
+<!-- SMILIE tag description and syntax -->
+<section id="intro2">
+    <h2>
+        The HTML SMart Inquire LInk Exists (SMILIE) Anchor Tag
+    </h2>
+    <p>
+        The <code>&lt;a&gt;</code> SMILIE tag is the smart link of the web. It defines a hyperlink, allowing users to
+        access pages even if the link is invalid (inactive, malformed, non-existent) or let the user know the link is
+        invalid.
+        The link color is changed to green <code style="color: green;">green &lt;a&gt;</code> if valid,
+        or grey <code style="color: grey;">grey &lt;a&gt;</code> if invalid.
+    </p>
+</section>
+<section id="syntax2">
+    <h3>
+        The Syntax
+    </h3>
+    <pre> <code>&lt;id="0" href="javascript:void(0)" data-wait=5000 data-url_head="https://www.google.xxx"
+        data-url_tail="https://www.google.com" onclick="xref(id)"&gt;Invalid malformed Google link with valid alternate link&lt;/a&gt;</code><br>
+	</pre>
+</section>
+<section id="attributes3">
+    <h3>
+        Key Attributes of SmILiE link tag
+    </h3>
+    <ul>
+        <li><strong>id: </strong> The unique identifier or id (the simplest is a unique integer number) for the anchor tag.</li>
+        <li><strong>data-url_head:</strong> Specifies the required primary destination URL.</li>
+        <li><strong>data-url_tail:</strong> Specifies the optional secondary destination URL. (optional) </li>
+        <li><strong>data-wait:</strong> Defines the optional wait time to inquire and validate a link. (optional) </li>
+       <!--
+        <br>
+        <li><strong>href:</strong> Always a void or nothing Javascript; or href="javascript:void(0)</li>
+        <li><strong>onclick:</strong> Always a call with link id to Javascript function xref; or onclick="xref(id)"</li>
+        -->
+    </ul>
+</section>
+
+<!-- SMILIE CASE -->
+<section class="card smilie">
+    <h3>
+       <!-- &#x2705; --><!-- Displays as: ✅ -->
+        <span>&#x1F44D;</span>
+
+        Smart Inquire Link Exists (SmILiE)...
+    </h3>
+
+    The SmILiE links have three cases of failure and two cases of success to demonstrate the "smartness" of the link. For all five cases of failure and success, there is no error nor visiting non-existent, malformed, invald link.
+    <br><br>
+    <br>
+    <!-- invalid link no alterante -->
+    <p>
+        &bull; A SmILiE link to non-existent invalid link "boisejug.org" but with no alternate link to visit.
+    </p><br>
+
+    <code>&lt; id="1" href="javascript:void(0)" data-wait=5000 data-url_head="https://www.boisejug.org"
+        onclick="xref(id)"&gt;...&lt;/a&gt;</code><br>
+
+    <br> <a id="1" href="javascript:void(0)" data-wait=5000 data-url_head="https://www.boisejug.org" onclick="xref(id)">Invalid non-existent
+    Link "boise.jug" No Alternate Link</a><br>
+
+
+    <br>
+
+    <!-- invalid malformed link with valid alternate -->
+    <p>
+        &bull; A SmILiE link to malformed URL "google.xxx" with a valid alternate link "google.de" to visit.
+    </p><br>
+
+    <code>&lt; id="2" href="javascript:void(0)" data-wait=5000 data-url_head="https://www.google.xxx"
+        data-url_tail="https://www.google.de" onclick="xref(id)" &gt;...&lt;/a&gt;</code><br>
+    <br>
+
+    <a id="2" href="javascript:void(0)" data-wait=5000 data-url_head="https://www.google.xxx"
+       data-url_tail="https://www.google.de" onclick="xref(id)">Invalid malformed link "google.xxx" malformed link but has alternate link</a><br>
+
+
+    <br>
+
+    <!-- invalid non-exist link with valid alternate -->
+    <p>
+        &bull; A SmILiE link to a non-existing link "boisejug.org" but alternate link visits copy on Internet Archive.
+    </p><br>
+
+    <code>&lt; id="3" href="javascript:void(0)" data-wait=5000 data-url_head="https://www.boisejug.org"
+        data-url_tail="https://web.archive.org/web/20020926204018/http://www.boisejug.org/" onclick="xref(id)" &gt;...&lt;/a&gt;</code><br>
+    <br>
+
+    <a id="3" href="javascript:void(0)" data-wait=5000 data-url_head="https://www.boisejug.org"
+       data-url_tail="https://web.archive.org/web/20020926204018/http://www.boisejug.org/" onclick="xref(id)">Invalid non-existent invalid
+        "boisejug.org" link but has alternate valid link.</a><br>
+
+
+    <br>
+
+    <!-- valid link no alternate -->
+
+    <p>
+        &bull; A SmILiE link to valid link "wilgil.me" to visit, but without validate alternate link not visited.
+    </p><br>
+
+
+    <code>&lt;id="4" href="javascript:void(0)" data-wait=5000 data-url_head="https://www.wilgil.me"
+        onclick="xref(id)"&gt;...&lt;/a&gt;</code><br>
+
+    <br><a id="4" href="javascript:void(0)" data-wait=5000 data-url_head="https://www.wilgil.me"
+           onclick="xref(id)">Valid link "wilgil.me" to visit but without an alternate  link to visit.</a><br>
+
+    <!-- valid link with alternate -->
+
+    <p>
+        &bull;  A SmILiE link to valid link "wilgil.me" to visit, but with validate alternate link not visited.
+    </p><br>
+
+
+    <code>&lt;id="5" href="javascript:void(0)" data-wait=5000 data-url_head="https://www.wilgil.me"
+        data-url_tail="https://wgilreath.github.io/WillHome.html" onclick="xref(id)"&gt;...&lt;/a&gt;</code><br>
+
+    <br><a id="5" href="javascript:void(0)" data-wait=5000 data-url_head="https://www.wilgil.me"
+           data-url_tail="https://wgilreath.github.io/WillHome.html" onclick="xref(id)">Valid link "wilgil.me" exists and valid
+    alternate link.</a><br>
+
+
+</section>
+
+<br><br><br>
+
+<hr>
+<footer style="text-align: center;">
+    <small>&copy; 2026 William Fletcher Gilreath. All Rights Reserved.</small>
+</footer>
+
+<!-- add statcounter to track access of webpage -->
+
+</body>
+</html>
