@@ -31,7 +31,8 @@
         }
 
         .failure {
-            border-left: 5px solid #c0392b; <!-- grey??? -->
+            border-left: 5px solid #c0392b;
+        <!-- grey ? ? ? -->
         }
 
         .smilie {
@@ -52,7 +53,7 @@
     </style>
 </head>
 
-
+<!--
 <script>
     // Replace with your allowed domain name
     const allowedDomain = "wilgil.me";
@@ -63,9 +64,8 @@
         // Forcefully redirect them away
         window.location.replace("https://www.wilgil.me");
     }
-
 </script>
-
+-->
 
 <body>
 
@@ -192,12 +192,12 @@
         }
     }//end isValidHttpUrl
 
-    function checkUrl (string) {
-        let givenURL ;
+    function checkUrl(string) {
+        let givenURL;
         try {
-            givenURL = new URL (string);
+            givenURL = new URL(string);
         } catch (error) {
-            console.log ("error is", error);
+            console.log("error is", error);
             return false;
         }
         return true;
@@ -211,7 +211,8 @@
     HTML Anchor Link and SmILiE Link Demonstration</h1>
 <p>
     The <code>&lt;a&gt;</code> anchor tag is the heartbeat of the web it puts the "hyper" in hypertext. Here is how to
-    use it &mdash; and how to break it. The "flaw" in a raw HTML anchor link is that the link visited must exist to access.
+    use it &mdash; and how to break it. The "flaw" in a raw HTML anchor link is that the link visited must exist to
+    access.
 </p>
 
 <section id="intro">
@@ -313,28 +314,31 @@
         Key Attributes of SmILiE link tag
     </h3>
     <ul>
-        <li><strong>id: </strong> The unique identifier or id (the simplest is a unique integer number) for the anchor tag.</li>
+        <li><strong>id: </strong> The unique identifier or id (the simplest is a unique integer number) for the anchor
+            tag.
+        </li>
         <li><strong>data-url_head:</strong> Specifies the required primary destination URL.</li>
-        <li><strong>data-url_tail:</strong> Specifies the optional secondary destination URL. (optional) </li>
-        <li><strong>data-wait:</strong> Defines the optional wait time to inquire and validate a link. (optional) </li>
-       <!--
-        <br>
-        <li><strong>href:</strong> Always a void or nothing Javascript; or href="javascript:void(0)</li>
-        <li><strong>onclick:</strong> Always a call with link id to Javascript function xref; or onclick="xref(id)"</li>
-        -->
+        <li><strong>data-url_tail:</strong> Specifies the optional secondary destination URL. (optional)</li>
+        <li><strong>data-wait:</strong> Defines the optional wait time to inquire and validate a link. (optional)</li>
+        <!--
+         <br>
+         <li><strong>href:</strong> Always a void or nothing Javascript; or href="javascript:void(0)</li>
+         <li><strong>onclick:</strong> Always a call with link id to Javascript function xref; or onclick="xref(id)"</li>
+         -->
     </ul>
 </section>
 
 <!-- SMILIE CASE -->
 <section class="card smilie">
     <h3>
-       <!-- &#x2705; --><!-- Displays as: ✅ -->
+        <!-- &#x2705; --><!-- Displays as: ✅ -->
         <span>&#x1F44D;</span>
 
         Smart Inquire Link Exists (SmILiE)...
     </h3>
 
-    The SmILiE links have three cases of failure and two cases of success to demonstrate the "smartness" of the link. For all five cases of failure and success, there is no error nor visiting non-existent, malformed, invald link.
+    The SmILiE links have three cases of failure and two cases of success to demonstrate the "smartness" of the link.
+    For all five cases of failure and success, there is no error nor visiting non-existent, malformed, invald link.
     <br><br>
     <br>
     <!-- invalid link no alterante -->
@@ -345,7 +349,8 @@
     <code>&lt; id="1" href="javascript:void(0)" data-wait=5000 data-url_head="https://www.boisejug.org"
         onclick="xref(id)"&gt;...&lt;/a&gt;</code><br>
 
-    <br> <a id="1" href="javascript:void(0)" data-wait=5000 data-url_head="https://www.boisejug.org" onclick="xref(id)">Invalid non-existent
+    <br> <a id="1" href="javascript:void(0)" data-wait=5000 data-url_head="https://www.boisejug.org" onclick="xref(id)">Invalid
+    non-existent
     Link "boise.jug" No Alternate Link</a><br>
 
 
@@ -361,7 +366,8 @@
     <br>
 
     <a id="2" href="javascript:void(0)" data-wait=5000 data-url_head="https://www.google.xxx"
-       data-url_tail="https://www.google.de" onclick="xref(id)">Invalid malformed link "google.xxx" malformed link but has alternate link</a><br>
+       data-url_tail="https://www.google.de" onclick="xref(id)">Invalid malformed link "google.xxx" malformed link but
+        has alternate link</a><br>
 
 
     <br>
@@ -376,7 +382,8 @@
     <br>
 
     <a id="3" href="javascript:void(0)" data-wait=5000 data-url_head="https://www.boisejug.org"
-       data-url_tail="https://web.archive.org/web/20020926204018/http://www.boisejug.org/" onclick="xref(id)">Invalid non-existent invalid
+       data-url_tail="https://web.archive.org/web/20020926204018/http://www.boisejug.org/" onclick="xref(id)">Invalid
+        non-existent invalid
         "boisejug.org" link but has alternate valid link.</a><br>
 
 
@@ -393,12 +400,12 @@
         onclick="xref(id)"&gt;...&lt;/a&gt;</code><br>
 
     <br><a id="4" href="javascript:void(0)" data-wait=5000 data-url_head="https://www.wilgil.me"
-           onclick="xref(id)">Valid link "wilgil.me" to visit but without an alternate  link to visit.</a><br>
+           onclick="xref(id)">Valid link "wilgil.me" to visit but without an alternate link to visit.</a><br>
 
     <!-- valid link with alternate -->
 
     <p>
-        &bull;  A SmILiE link to valid link "wilgil.me" to visit, but with validate alternate link not visited.
+        &bull; A SmILiE link to valid link "wilgil.me" to visit, but with validate alternate link not visited.
     </p><br>
 
 
@@ -406,7 +413,8 @@
         data-url_tail="https://wgilreath.github.io/WillHome.html" onclick="xref(id)"&gt;...&lt;/a&gt;</code><br>
 
     <br><a id="5" href="javascript:void(0)" data-wait=5000 data-url_head="https://www.wilgil.me"
-           data-url_tail="https://wgilreath.github.io/WillHome.html" onclick="xref(id)">Valid link "wilgil.me" exists and valid
+           data-url_tail="https://wgilreath.github.io/WillHome.html" onclick="xref(id)">Valid link "wilgil.me" exists
+    and valid
     alternate link.</a><br>
 
 
@@ -420,6 +428,24 @@
 </footer>
 
 <!-- add statcounter to track access of webpage -->
-
+<!-- Default Statcounter code for Wilgil Smilie
+https://wilgil.me/smilie.html -->
+<script type="text/javascript">
+    var sc_project = 13335426;
+    var sc_invisible = 1;
+    var sc_security = "5a1e6b9c";
+</script>
+<script type="text/javascript"
+        src="https://www.statcounter.com/counter/counter.js"
+        async></script>
+<noscript>
+    <div class="statcounter"><a title="Web Analytics"
+                                href="https://statcounter.com/" target="_blank"><img
+            class="statcounter"
+            src="https://c.statcounter.com/13335426/0/5a1e6b9c/1/"
+            alt="Web Analytics"
+            referrerPolicy="no-referrer-when-downgrade"></a></div>
+</noscript>
+<!-- End of Statcounter Code -->
 </body>
 </html>
